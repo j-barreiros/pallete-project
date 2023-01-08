@@ -1,13 +1,29 @@
+import { MouseEvent } from "react";
 import StyledColorStripe from "./StyledColorStripe";
 
 type ColorStripeProps = {
-    colorValue:string;
+    colorValue: string;
 }
 
-const ColorStripe = ({colorValue} : ColorStripeProps) => {
+const ColorStripe = ({ colorValue }: ColorStripeProps) => {
+
+    const handleColorValueClick = (event: MouseEvent<HTMLParagraphElement, globalThis.MouseEvent>) => {
+        event.stopPropagation();
+        navigator.clipboard.writeText(colorValue)
+        console.log('value');
+    }
+
     return (
-        <StyledColorStripe color={colorValue}>
-            <p className='color-value'>{colorValue}</p>
+        <StyledColorStripe
+            onClick={() => console.log('stripe')}
+            color={colorValue}
+        >
+            <p
+                className='color-value'
+                onClick={(event) => handleColorValueClick(event)}
+            >
+                {colorValue}
+            </p>
         </StyledColorStripe>
     )
 }
