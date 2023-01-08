@@ -1,4 +1,6 @@
 // Style
+import { useState } from "react";
+import { EmptyHeart, FullHeart } from "../../../assets/Icons";
 import { PalleteType } from "../../../context/PalletesContext";
 import ColorStripe from "./ColorStripe/ColorStripe";
 import StyledPalleteItem from "./StyledPalleteItem";
@@ -9,8 +11,11 @@ type PalleteItemProps = {
 
 const PalleteItem = ({pallete} : PalleteItemProps) => {
     const {color1, color2, color3, color4} = pallete;
+
+    //Change this
+    const [isLiked, setIsLiked] = useState(false)
     return (
-        <StyledPalleteItem>
+        <StyledPalleteItem isLiked={isLiked}>
             <section className='color-box'>
                 <ColorStripe colorValue={color1} />
                 <ColorStripe colorValue={color2} />
@@ -18,7 +23,8 @@ const PalleteItem = ({pallete} : PalleteItemProps) => {
                 <ColorStripe colorValue={color4} />
             </section>
             <section className='pallete-info'>
-                <button className='like-btn'>
+                <button className='like-btn' onClick={() => setIsLiked(!isLiked)}>
+                    {isLiked ? <FullHeart /> : <EmptyHeart />}
                     Like
                 </button>
 
