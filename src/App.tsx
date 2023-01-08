@@ -7,17 +7,21 @@ import './App.css'
 // Components
 import Navbar from './components/Navbar/Navbar'
 import PalleteDisplay from './components/PalleteDisplay/PalleteDisplay'
+import Sidebar from './components/Sidebar/Sidebar'
 
 // Context
 import { PalleteContextProvider } from './context/PalletesContext'
+import GlobalStyle from './GlobalStyle'
 
 function App() {
 
   return (
     <main className="App">
       <PalleteContextProvider>
+        <GlobalStyle />
         <Navbar />
-        <section>
+        <section className='main-content'>
+          <Sidebar />
           <PalleteDisplay />
         </section>
       </PalleteContextProvider>
