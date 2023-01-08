@@ -18,10 +18,17 @@ const StyledColorStripe = styled.article`
 
     .color-value {
         display: none;
-        padding: 5px 3px;
-        background-color: rgba(0,0,0,50%);
+        padding: 5px 10px;
+        border-top-right-radius: 4px;
+        background-color: rgba(0,0,0,20%);
+        font-weight: 500;
         color: #fff;
+        letter-spacing: 1.7px;
         cursor: pointer;
+        transition: background-color 0.15s;
+        &:hover {
+            background-color: rgba(0,0,0,50%);
+        }
     }
 `
 
