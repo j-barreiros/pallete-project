@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 // Style
 import './App.css'
+import CollectionBar from './components/CollectionBar/CollectionBar'
 
 // Components
 import Navbar from './components/Navbar/Navbar'
@@ -14,6 +15,8 @@ import { PalleteContextProvider } from './context/PalletesContext'
 import GlobalStyle from './GlobalStyle'
 
 function App() {
+  const [activePage, setActivePage] = useState('New');
+  const [activeSubPage, setActiveSubPage] = useState('Month');
 
   return (
     <main className="App">
@@ -21,8 +24,17 @@ function App() {
         <GlobalStyle />
         <Navbar />
         <section className='main-content'>
-          <Sidebar />
-          <PalleteDisplay />
+          <Sidebar
+            activePage={activePage}
+            setActivePage={setActivePage}
+            activeSubpage={activeSubPage}
+            setActiveSubpage={setActiveSubPage}
+          />
+          <PalleteDisplay
+            activePage={activePage}
+            activeSubpage={activeSubPage}
+          />
+          <CollectionBar />
         </section>
       </PalleteContextProvider>
     </main>

@@ -1,15 +1,72 @@
 // Style
-import { useContext } from "react";
-import { PalleteContext } from "../../context/PalletesContext";
+import { useContext, useEffect, useState } from "react";
+import { PalleteContext, PalleteType } from "../../context/PalletesContext";
 import PalleteItem from "./PalleteItem/PalleteItem";
 import StyledPalleteDisplay from "./StyledPalleteDisplay"
 
-const PalleteDisplay = () => {
+type PalleteDisplayProps = {
+    activePage: string,
+    activeSubpage: string,
+}
+
+const PalleteDisplay = ({ activePage, activeSubpage }: PalleteDisplayProps) => {
     const palleteContext = useContext(PalleteContext)
-    const testeArray = [1,2,3,4,5,6];
+
+    const [palleteList, setPalleteList] = useState([] as PalleteType[]);
+
+
+    useEffect(() => {
+        switch (activePage) {
+            case 'New':
+                setPalleteList(palleteContext.palletesSortedByDate());
+                break;
+            case 'Popular':
+                setPalleteList(palleteContext.palletesSortedByLikes());
+                break;
+            case 'Collection':
+                setPalleteList(palleteContext.collection);
+                break;
+        }
+    }, [activePage])
+
+    if (activePage === 'New') {
+        return (
+            <StyledPalleteDisplay>
+                {palleteContext.palletesSortedByDate().map(p => <PalleteItem pallete={p} />)}
+            </StyledPalleteDisplay>
+        )
+    } else if (activePage === 'Popular') {
+        if (activeSubpage === 'Month') {
+            return (
+                <StyledPalleteDisplay>
+                    {palleteContext.palletesOfTheMonth().map(p => <PalleteItem pallete={p} />)}
+                </StyledPalleteDisplay>
+            )
+        }
+
+        if (activeSubpage === 'Year') {
+            return (
+                <StyledPalleteDisplay>
+                    {palleteContext.palletesOfTheYear().map(p => <PalleteItem pallete={p} />)}
+                </StyledPalleteDisplay>
+            )
+        }
+        return (
+            <StyledPalleteDisplay>
+                {palleteContext.palletesSortedByLikes().map(p => <PalleteItem pallete={p} />)}
+            </StyledPalleteDisplay>
+        )
+    } else if (activePage === 'Collection') {
+        return (
+            <StyledPalleteDisplay>
+                {palleteContext.collection.map(p => <PalleteItem pallete={p} />)}
+            </StyledPalleteDisplay>
+        )
+    }
+
     return (
         <StyledPalleteDisplay>
-            {palleteContext.map(p  => <PalleteItem pallete={p}/>)}
+            {palleteContext.palletes.map(p => <PalleteItem pallete={p} />)}
         </StyledPalleteDisplay>
     )
 }
