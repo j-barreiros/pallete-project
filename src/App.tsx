@@ -36,11 +36,7 @@ function App() {
         <section className='main-content'>
           <BrowserRouter>
             <Navbar />
-            <Sidebar
-              activePage={activePage}
-              activeSubpage={activeSubpage}
-              setActiveSubpage={setActiveSubpage}
-            />
+            <Sidebar />
             <Routes>
               <Route path='/' element={<PalleteDisplay activePage={activePage} activeSubpage={activeSubpage} />} />
               <Route path='/popular/month' element={<PopularMonth />} />
