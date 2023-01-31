@@ -138,8 +138,8 @@ export const PalleteContextProvider = ({ children }: PalleteContextProps) => {
         return localData ? JSON.parse(localData) : [] as PalleteType[]
     });
 
-    const supabaseUrl = process.env.VITE_SUPABASE_URL;
-    const supabaseKey = process.env.VITE_SUPABASE_KEY;
+    const supabaseUrl = process.env.VITE_SUPABASE_URL as string;
+    const supabaseKey = process.env.VITE_SUPABASE_KEY as string;
     const supabase = createClient(supabaseUrl, supabaseKey);
     const [fetchError, setFetchError] = useState<any>({}); 
     const [palletesSupa, setPalletesSupa] = useState<PalleteType[]>([]);
@@ -162,8 +162,14 @@ export const PalleteContextProvider = ({ children }: PalleteContextProps) => {
     }
 
     useEffect(() => {
+        console.log(process.env.VITE_SUPABASE_URL)
+        console.log(process.env.VITE_SUPABASE_KEY)
         fetchPalletes();
     }, [])
+    
+    useEffect(() => {
+        localStorage.setItem('collection', JSON.stringify(collection))
+    }, [collection]);
 
     let contextValue: contextType = {
         palletes: palletesSupa,
@@ -209,9 +215,6 @@ export const PalleteContextProvider = ({ children }: PalleteContextProps) => {
     }
 
 
-    useEffect(() => {
-        localStorage.setItem('collection', JSON.stringify(collection))
-    }, [collection])
 
 
     return (
