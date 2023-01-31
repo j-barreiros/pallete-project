@@ -138,8 +138,8 @@ export const PalleteContextProvider = ({ children }: PalleteContextProps) => {
         return localData ? JSON.parse(localData) : [] as PalleteType[]
     });
 
-    const supabaseUrl = process.env.VITE_SUPABASE_URL as string;
-    const supabaseKey = process.env.VITE_SUPABASE_KEY as string;
+    const supabaseUrl = process.env.SUPABASE_URL as string;
+    const supabaseKey = process.env.SUPABASE_KEY as string;
     const supabase = createClient(supabaseUrl, supabaseKey);
     const [fetchError, setFetchError] = useState<any>({}); 
     const [palletesSupa, setPalletesSupa] = useState<PalleteType[]>([]);
