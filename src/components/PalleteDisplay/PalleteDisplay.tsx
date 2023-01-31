@@ -11,64 +11,39 @@ type PalleteDisplayProps = {
 
 const PalleteDisplay = ({ activePage, activeSubpage }: PalleteDisplayProps) => {
     const palleteContext = useContext(PalleteContext)
-
-    const [palleteList, setPalleteList] = useState([] as PalleteType[]);
-
+    const [fadeAnimation, setFadeAnimation] = useState(false);
 
     useEffect(() => {
-        switch (activePage) {
-            case 'New':
-                setPalleteList(palleteContext.palletesSortedByDate());
-                break;
-            case 'Popular':
-                setPalleteList(palleteContext.palletesSortedByLikes());
-                break;
-            case 'Collection':
-                setPalleteList(palleteContext.collection);
-                break;
-        }
-    }, [activePage])
+        if (fadeAnimation === true) return;
+        setFadeAnimation(true);
+        setTimeout(() => setFadeAnimation(false), 500);
+    }, [activePage, activeSubpage])
 
-    if (activePage === 'New') {
-        return (
-            <StyledPalleteDisplay>
-                {palleteContext.palletesSortedByDate().map(p => <PalleteItem pallete={p} />)}
-            </StyledPalleteDisplay>
-        )
-    } else if (activePage === 'Popular') {
-        if (activeSubpage === 'Month') {
-            return (
-                <StyledPalleteDisplay>
-                    {palleteContext.palletesOfTheMonth().map(p => <PalleteItem pallete={p} />)}
-                </StyledPalleteDisplay>
-            )
-        }
-
-        if (activeSubpage === 'Year') {
-            return (
-                <StyledPalleteDisplay>
-                    {palleteContext.palletesOfTheYear().map(p => <PalleteItem pallete={p} />)}
-                </StyledPalleteDisplay>
-            )
-        }
-        return (
-            <StyledPalleteDisplay>
-                {palleteContext.palletesSortedByLikes().map(p => <PalleteItem pallete={p} />)}
-            </StyledPalleteDisplay>
-        )
-    } else if (activePage === 'Collection') {
-        return (
-            <StyledPalleteDisplay>
-                {palleteContext.collection.map(p => <PalleteItem pallete={p} />)}
-            </StyledPalleteDisplay>
-        )
-    }
 
     return (
-        <StyledPalleteDisplay>
-            {palleteContext.palletes.map(p => <PalleteItem pallete={p} />)}
+        <StyledPalleteDisplay activePage={activePage} className={`${fadeAnimation ? 'fadeIn' : ''}`}>
+            {SelectedPallete(activePage, activeSubpage)}
         </StyledPalleteDisplay>
     )
 }
 
 export default PalleteDisplay;
+
+const SelectedPallete = (activePage: string, activeSubpage: string) => {
+    const palleteContext = useContext(PalleteContext)
+    switch (activePage) {
+        case 'Popular':
+            switch (activeSubpage) {
+                case 'Month':
+                    return palleteContext.palletesOfTheMonth().map(p => <PalleteItem key={p.id} pallete={p} />)
+                case 'Year':
+                    return palleteContext.palletesOfTheYear().map(p => <PalleteItem key={p.id} pallete={p} />)
+                default: // All Time
+                    return palleteContext.palletesSortedByLikes().map(p => <PalleteItem key={p.id} pallete={p} />)
+            }
+        case 'Collection':
+            return palleteContext.collection.map(p => <PalleteItem key={p.id} pallete={p} />)
+        default: // New
+            return palleteContext.palletesSortedByDate().map(p => <PalleteItem key={p.id} pallete={p} />)
+    }
+}

@@ -9,13 +9,11 @@ const ColorStripe = ({ colorValue }: ColorStripeProps) => {
 
     const handleColorValueClick = (event: MouseEvent<HTMLParagraphElement, globalThis.MouseEvent>) => {
         event.stopPropagation();
-        navigator.clipboard.writeText(colorValue)
-        console.log('value');
+        navigator.clipboard.writeText(colorValue);
     }
 
     return (
         <StyledColorStripe
-            onClick={() => console.log('stripe')}
             color={colorValue}
         >
             <p

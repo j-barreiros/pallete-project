@@ -1,28 +1,14 @@
-// Style
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { HeartEmpty, HeartFull } from "../../../assets/Icons";
-import { PalleteContext, PalleteType } from "../../../context/PalletesContext";
-import ColorBox from "../../ColorBox/ColorBox";
-import LikeButton from "../../LikeButton/LikeButton";
-import PostTime from "../../PostTime/PostTime";
-import ColorStripe from "./ColorStripe/ColorStripe";
-import StyledPalleteItem from "./StyledPalleteItem";
+import StyledPostTime from "./StyledPostTime";
 
-type PalleteItemProps = {
-    pallete: PalleteType;
+type PostTimeProps = {
+    palleteDate: string;
 }
 
-const PalleteItem = ({ pallete }: PalleteItemProps) => {
-    const { color1, color2, color3, color4, id, date, likes } = pallete;
-    // Context
-    const palleteContext = useContext(PalleteContext);
+const PostTime = ({palleteDate}:PostTimeProps) => {
     
-    const navigator = useNavigate();
-
-    const handleTime = (palleteDate: string) => {
+    const handleTime = (date:string) => {
         const currentDate = new Date();
-        const convertedPalleteDate = new Date(palleteDate);
+        const convertedPalleteDate = new Date(date);
         const timeBetween = Math.floor(currentDate.getTime() - convertedPalleteDate.getTime());
 
         // Years
@@ -64,17 +50,9 @@ const PalleteItem = ({ pallete }: PalleteItemProps) => {
         return '1 minute'
     }
 
-    return (
-        <StyledPalleteItem
-            isLiked={palleteContext.isInCollection(id)}
-        >
-            <ColorBox pallete={pallete} mode='small'/>
-            <section className='pallete-info'>
-                <LikeButton mode='number' pallete={pallete}/>
-                <PostTime palleteDate={pallete.date}/>
-            </section>
-        </StyledPalleteItem>
+    return(
+        <StyledPostTime>{handleTime(palleteDate)}</StyledPostTime>
     )
 }
 
-export default PalleteItem;
+export default PostTime;

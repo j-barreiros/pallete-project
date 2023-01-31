@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
 type StyledPalleteItemProps = {
-    isLiked:boolean;
+    isLiked: boolean;
 }
 
 const StyledPalleteItem = styled.article<StyledPalleteItemProps>`
+    width: 100%;
     max-width: 250px;
+    min-width: 200px;
 
     .color-box {
         overflow: auto;
@@ -21,7 +23,7 @@ const StyledPalleteItem = styled.article<StyledPalleteItemProps>`
         align-items: center;
 
         .like-btn {
-            padding: 3px 5px;
+            padding: 0px 10px 0px 0px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -30,8 +32,10 @@ const StyledPalleteItem = styled.article<StyledPalleteItemProps>`
             border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.15s;
+
             .icon {
                 margin-right: 5px;
+                scale: 0.7;
             }
         }
     }
